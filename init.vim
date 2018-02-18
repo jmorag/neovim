@@ -33,8 +33,9 @@ Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
+Plug 'wellle/targets.vim'
+Plug 'michaeljsmith/vim-indent-object'
 "Mappings
-Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 "Aesthetics
 Plug 'altercation/vim-colors-solarized'
@@ -44,6 +45,7 @@ let g:lightline = { 'colorscheme': 'solarized', }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
@@ -60,7 +62,7 @@ Plug 'eagletmt/ghcmod-vim'
 " required for ghcmod
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'eagletmt/neco-ghc'
-Plug 'parsonsmatt/intero-neovim'
+" Plug 'parsonsmatt/intero-neovim'
 "General linter
 Plug 'w0rp/ale'
 
@@ -70,10 +72,11 @@ call plug#end()
 " Config filetypes ---------------------- {{{
 " no code folding on open
 set foldlevel=99
+
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
-    autocmd FileType vim nnoremap , :wall<CR>:source ~/.config/nvim/init.vim<CR>:nohlsearch<CR>
+    autocmd FileType vim nnoremap , :wall<CR>:source $MYVIMRC<CR>:nohlsearch<CR>
 augroup END
 
 augroup filetype_config
@@ -116,18 +119,33 @@ nnoremap <Leader>h :YcmCompleter FixIt<CR>
 inoremap fd <Esc>
 tnoremap fd <C-\><C-n>
 
+set timeoutlen=150
+
+
 " Fix behavior of Y so it matches C and D
 nnoremap Y y$
+
+" Capital H and L are stronger h and l
+nnoremap H ^
+nnoremap L $
 
 " Formatting
 nmap = <Plug>(EasyAlign)
 vmap = <Plug>(EasyAlign)
 
-" Access git
-nnoremap <Leader>g :Gstatus<CR>
+" Git
+nnoremap <silent> <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gp :Git push<CR>
+
+" Tabs
+nnoremap <silent> <Leader>t :tabnew<CR>
+
+" Linter errors
+nnoremap <silent> ]e :ALENextWrap<CR>
+nnoremap <silent> [e :ALEPreviousWrap<CR>
 
 " Edit vimrc easily
-nnoremap <silent> <Leader>ev :vs ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <Leader>ev :tabedit ~/.config/nvim/init.vim<CR>
 
 " Weird python thing I don't understand
 nnoremap <buffer> <C-B> :exec ':w !python' shellescape(@%, 1)<cr>
@@ -214,6 +232,8 @@ nnoremap : :Buffers<CR>
 nnoremap <silent> <leader>sl :Snippets<CR>
 " Edit snippets
 nnoremap <silent> <leader>se :UltiSnipsEdit<CR>
+nnoremap <silent> <leader>sE :vs ~/.config/nvim/plugged/vim-snippets/snippets<CR>
+
 
 " Python autocompletion
 let g:ycm_python_binary_path = '/usr/bin/python3'
@@ -235,7 +255,7 @@ let g:ycm_key_list_select_previous_completion=['<C-k>']
 let g:UltiSnipsEditSplit="vertical"
 
 " Just continue editing built in snippets
-let g:UltiSnipsSnippetsDir="~/.config/nvim/plugged/vim-snippets/snippets"
+let g:UltiSnipsSnippetsDir="~/.config/nvim/plugged/vim-snippets/UltiSnips"
 
 " DelimitMate Config
 let delimitMate_expand_cr=2
@@ -323,47 +343,6 @@ set noswapfile
 
 " }}} Miscellaneous "
 
-" {{{ Ocaml config
-" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
-let s:opam_share_dir = system("opam config var share")
-let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
-
-let s:opam_configuration = {}
-
-function! OpamConfOcpIndent()
-  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-endfunction
-let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-function! OpamConfOcpIndex()
-  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-endfunction
-let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-function! OpamConfMerlin()
-  let l:dir = s:opam_share_dir . "/merlin/vim"
-  execute "set rtp+=" . l:dir
-endfunction
-let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
-let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
-for tool in s:opam_packages
-  " Respect package order (merlin should be after ocp-index)
-  if count(s:opam_available_tools, tool) > 0
-    call s:opam_configuration[tool]()
-  endif
-endfor
-" ## end of OPAM user-setup addition for vim / base ## keep this line
-" ## added by OPAM user-setup for vim / ocp-indent ## f9f88af42dffebb4b3f6fb7a3b95952c ## you can edit, but keep this line
-if count(s:opam_available_tools,"ocp-indent") == 0
-  source "/Users/josephmorag/.opam/system/share/vim/syntax/ocp-indent.vim"
-endif
-" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
-
-" }}}
-
 " Latex Config {{{
 " Latex autocompletion and viewing
 if !exists('g:ycm_semantic_triggers')
@@ -416,7 +395,56 @@ augroup filetype_haskell
     autocmd Filetype haskell nnoremap <silent> <buffer> te :GhcModTypeClear<CR>
     " Remove <> from haskell matchpairs
     autocmd Filetype haskell let b:delimitMate_matchpairs = "(:),[:],{:}"
+    autocmd Filetype haskell let b:ale_linters = {
+                                   \   'haskell': ['stack-ghc-mod', 'stack-ghc'],
+                                   \}
 augroup END
 
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
 " }}} Haskell config "
+
+" " {{{ Ocaml config
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
+" ## added by OPAM user-setup for vim / ocp-indent ## 82df321edcaeade0db7a7fa29b0090af ## you can edit, but keep this line
+if count(s:opam_available_tools,"ocp-indent") == 0
+  source "/Users/josephmorag/.opam/default/share/vim/syntax/ocp-indent.vim"
+endif
+" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
+
+augroup ocaml
+    autocmd!
+    " autocmd FileType ocaml setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter *.mly setlocal commentstring=/*\ %s\ */
+augroup END
+" " }}}
