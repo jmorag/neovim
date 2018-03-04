@@ -35,6 +35,8 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'wellle/targets.vim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'terryma/vim-multiple-cursors' "Experimental
+Plug 'matze/vim-move'
 "Mappings
 Plug 'tpope/vim-repeat'
 "Aesthetics
@@ -54,7 +56,6 @@ Plug 'tpope/vim-fugitive'
 "Languages -----------------------
 "Latex
 Plug 'lervag/vimtex'
-Plug 'matze/vim-tex-fold'
 "Ocaml
 Plug 'the-lambda-church/merlin'
 "Haskell
@@ -62,7 +63,6 @@ Plug 'eagletmt/ghcmod-vim'
 " required for ghcmod
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'eagletmt/neco-ghc'
-" Plug 'parsonsmatt/intero-neovim'
 "General linter
 Plug 'w0rp/ale'
 
@@ -99,6 +99,7 @@ augroup END
 " Misc Key mappings {{{ " 
 
 let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
 
 "Life is better this way
 nnoremap ; :
@@ -119,8 +120,8 @@ nnoremap <Leader>h :YcmCompleter FixIt<CR>
 inoremap fd <Esc>
 tnoremap fd <C-\><C-n>
 
-set timeoutlen=150
-
+" In case we actually need to type fd, this makes it bearable
+set timeoutlen=350
 
 " Fix behavior of Y so it matches C and D
 nnoremap Y y$
@@ -132,6 +133,9 @@ nnoremap L $
 " Formatting
 nmap = <Plug>(EasyAlign)
 vmap = <Plug>(EasyAlign)
+let g:move_map_keys = 0
+vmap <DOWN> <Plug>MoveBlockDown
+vmap <UP> <Plug>MoveBlockUp
 
 " Git
 nnoremap <silent> <Leader>gs :Gstatus<CR>
@@ -159,6 +163,7 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1 " 1 matches !, etc.
 " Imporve vim's normal f motion
 nmap f <Plug>(easymotion-sl)
+omap f <Plug>(easymotion-sl)
 
 " Incsearch 
 map /  <Plug>(incsearch-forward)
@@ -171,12 +176,12 @@ map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
 " Create GotoCharTimer
-nmap <c--> <Plug>(easymotion-sn)
+nmap F <Plug>(easymotion-sn)
 function! PressEnter(timer)
     :call feedkeys("\<CR>")
 endfunction
 function! GoToCharTimer()
-    :call feedkeys("\<c-->")
+    :call feedkeys("F")
     let timer=timer_start(1500, 'PressEnter')
     :set nohlsearch
 endfunction    
@@ -209,7 +214,7 @@ augroup nerd_tree
 augroup END
 
 " Fuzzy file finding
-nnoremap <c-p> :Files<CR>
+nnoremap <leader>p :Files<CR>
 set grepprg=rg\ --vimgrep
 
 " Fuzzy term finding in project with fzf 
@@ -244,15 +249,17 @@ let g:ycm_extra_conf_globlist = ['~/*']
 " Use bare bones global ycm conf as default
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 
+" Less aggressive completion
+" let g:ycm_min_num_of_chars_for_completion = 5
+
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 let g:ycm_key_list_select_completion=['<C-j>']
-" previous completion select buggy
-let g:ycm_key_list_select_previous_completion=['<C-k>']
+let g:ycm_key_list_previous_completion=['<C-k>']
 
 " Let Ultisnips split window
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="horizontal"
 
 " Just continue editing built in snippets
 let g:UltiSnipsSnippetsDir="~/.config/nvim/plugged/vim-snippets/UltiSnips"
@@ -266,9 +273,6 @@ set wildmode=longest,list
 " }}} Completion and snippets "
 
 " Miscellaneous {{{ "
-
-" Airline Fonts
-let g:airline_powerline_fonts = 0
 
 " Security
 set modelines=0
@@ -326,6 +330,7 @@ set incsearch
 set ignorecase
 set smartcase
 set showmatch
+set gdefault
 
 " Color scheme (terminal)
 syntax enable
@@ -362,7 +367,7 @@ let g:ycm_semantic_triggers.tex = [
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 
-" This adds a callback hook that updates Skim after compilation
+" This adds a callback hook that updates Skim after compilation {{{
 let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
 function! UpdateSkim(status)
   if !a:status | return | endif
@@ -381,9 +386,26 @@ function! UpdateSkim(status)
     call system(join(l:cmd + [line('.'), shellescape(l:out), shellescape(l:tex)], ' '))
   endif
 endfunction
+" }}}
 
 " Prevent .tex files from being treated as plain text
 let g:tex_flavor = 'latex'
+
+" Enable folding
+let g:vimtex_fold_enabled = 1
+let g:vimtex_fold_manual = 1
+let g:vimtex_imaps_leader = ';'
+
+augroup latex
+    autocmd!
+    autocmd Filetype tex inoremap <silent> <buffer> fd <ESC>:wall<CR>
+    autocmd Filetype tex set spell
+    autocmd Filetype tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
+    autocmd Filetype tex let b:delimitMate_quotes = "$"
+    autocmd Filetype tex inoremap \[ \[\]<LEFT><LEFT>
+    autocmd Filetype tex inoremap _ _{}<LEFT>
+    autocmd Filetype tex inoremap ^ ^{}<LEFT>
+augroup END
 " }}}
 
 " Haskell config {{{ "
@@ -444,7 +466,7 @@ endif
 
 augroup ocaml
     autocmd!
-    " autocmd FileType ocaml setlocal commentstring=(*\ %s\ *)
-    autocmd BufEnter *.mly setlocal commentstring=/*\ %s\ */
+    autocmd BufEnter,BufWinEnter *.ml[l]?  setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.mly     setlocal commentstring=/*\ %s\ */
 augroup END
 " " }}}
