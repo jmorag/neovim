@@ -16,14 +16,14 @@ if empty(glob("~/.config/nvim/autoload/plug.vim"))
     execute '!curl -fLo ~/.config/nvim/autoload/plug.vim 
         \ --create-dirs 
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    normal! :PlugInstall<CR>
+    :normal! :PlugInstall<CR>
 endif
 " }}} Bootstrap vim plug' "
 
 call plug#begin('~/.config/nvim/plugged')
 
 "Completion
-Plug 'Valloric/YouCompleteMe', {'do': './install.py -all'}
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer'}
 Plug 'rdnetto/YCM-Generator'
 "Snippets
 Plug 'SirVer/ultisnips'
