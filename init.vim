@@ -16,14 +16,13 @@ if empty(glob("~/.config/nvim/autoload/plug.vim"))
     execute '!curl -fLo ~/.config/nvim/autoload/plug.vim 
         \ --create-dirs 
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    :normal! :PlugInstall<CR>
 endif
 " }}} Bootstrap vim plug' "
 
 call plug#begin('~/.config/nvim/plugged')
 
 "Completion
-Plug 'Valloric/YouCompleteMe', {'do': './install.py --clang-completer'}
+Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator'
 "Snippets
 Plug 'SirVer/ultisnips'
@@ -338,6 +337,17 @@ set t_Co=256
 set background=dark
 colorscheme solarized
 set noshowmode
+" Allow background color toggle
+if exists("*ToggleBackground") == 0
+	function ToggleBackground()
+		if &background == "dark"
+			set background=light
+		else
+			set background=dark
+		endif
+	endfunction
+	command BG call ToggleBackground()
+endif
 
 " For easier copying into vim
 set pastetoggle=<F2>
@@ -402,9 +412,9 @@ augroup latex
     autocmd Filetype tex set spell
     autocmd Filetype tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
     autocmd Filetype tex let b:delimitMate_quotes = "$"
-    autocmd Filetype tex inoremap \[ \[\]<LEFT><LEFT>
-    autocmd Filetype tex inoremap _ _{}<LEFT>
-    autocmd Filetype tex inoremap ^ ^{}<LEFT>
+    autocmd Filetype tex inoremap <buffer> \[ \[\]<LEFT><LEFT>
+    autocmd Filetype tex inoremap <buffer> _ _{}<LEFT>
+    autocmd Filetype tex inoremap <buffer> ^ ^{}<LEFT>
 augroup END
 " }}}
 
@@ -464,9 +474,15 @@ if count(s:opam_available_tools,"ocp-indent") == 0
 endif
 " ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
 
+" Disable ocaml's default mappings
+let g:no_ocaml_maps=1
+let g:merlin_disable_default_keybindings = 1
 augroup ocaml
     autocmd!
-    autocmd BufEnter,BufWinEnter *.ml[l]?  setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.ml      setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.mll     setlocal commentstring=(*\ %s\ *)
     autocmd BufEnter,BufWinEnter *.mly     setlocal commentstring=/*\ %s\ */
+    autocmd Filetype ocaml nnoremap <silent> <buffer> tq :MerlinTypeOf<CR>
+    autocmd Filetype ocaml vnoremap <silent> <buffer> tq :MerlinTypeOfSel<CR>
 augroup END
 " " }}}
