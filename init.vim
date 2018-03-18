@@ -28,6 +28,7 @@ Plug 'rdnetto/YCM-Generator'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 "Easier text editing
+Plug 'simnalamburt/vim-mundo'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -159,6 +160,9 @@ nnoremap <silent> [e :ALEPreviousWrap<CR>
 
 " Edit vimrc easily
 nnoremap <silent> <Leader>ev :tabedit ~/.config/nvim/init.vim<CR>
+
+" Undo tree visualization 
+nnoremap <silent> <Leader>u :MUndoToggle<CR>
 
 " Weird python thing I don't understand
 nnoremap <buffer> <C-B> :exec ':w !python' shellescape(@%, 1)<cr>
