@@ -52,6 +52,7 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
 "Git
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 "Languages -----------------------
 "Latex
 Plug 'lervag/vimtex'
@@ -139,7 +140,11 @@ vmap <UP> <Plug>MoveBlockUp
 " Git
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gb :Gblame<CR>
-nnoremap <Leader>gp :Git push<CR>
+nnoremap <silent> <Leader>gp :Git push<CR>
+nmap <Leader>ga <Plug>GitGutterStageHunk
+nmap <Leader>gu <Plug>GitGutterUndoHunk
+nmap <Leader>gv <Plug>GitGutterPreviewHunk
+
 
 " Tabs
 nnoremap <silent> <Leader>t :tabnew<CR>
