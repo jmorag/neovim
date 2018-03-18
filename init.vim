@@ -16,14 +16,13 @@ if empty(glob("~/.config/nvim/autoload/plug.vim"))
     execute '!curl -fLo ~/.config/nvim/autoload/plug.vim 
         \ --create-dirs 
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    normal! :PlugInstall<CR>
 endif
 " }}} Bootstrap vim plug' "
 
 call plug#begin('~/.config/nvim/plugged')
 
 "Completion
-Plug 'Valloric/YouCompleteMe', {'do': './install.py -all'}
+Plug 'Valloric/YouCompleteMe'
 Plug 'rdnetto/YCM-Generator'
 "Snippets
 Plug 'SirVer/ultisnips'
@@ -139,6 +138,7 @@ vmap <UP> <Plug>MoveBlockUp
 
 " Git
 nnoremap <silent> <Leader>gs :Gstatus<CR>
+nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <Leader>gp :Git push<CR>
 
 " Tabs
@@ -343,6 +343,17 @@ set t_Co=256
 set background=dark
 colorscheme solarized
 set noshowmode
+" Allow background color toggle
+if exists("*ToggleBackground") == 0
+	function ToggleBackground()
+		if &background == "dark"
+			set background=light
+		else
+			set background=dark
+		endif
+	endfunction
+	command BG call ToggleBackground()
+endif
 
 " For easier copying into vim
 set pastetoggle=<F2>
@@ -469,10 +480,15 @@ if count(s:opam_available_tools,"ocp-indent") == 0
 endif
 " ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
 
+" Disable ocaml's default mappings
+let g:no_ocaml_maps=1
+let g:merlin_disable_default_keybindings = 1
 augroup ocaml
     autocmd!
-    autocmd BufEnter,BufWinEnter *.ml  setlocal commentstring=(*\ %s\ *)
-    autocmd BufEnter,BufWinEnter *.mll setlocal commentstring=(*\ %s\ *)
-    autocmd BufEnter,BufWinEnter *.mly setlocal commentstring=/*\ %s\ */
+    autocmd BufEnter,BufWinEnter *.ml      setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.mll     setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.mly     setlocal commentstring=/*\ %s\ */
+    autocmd Filetype ocaml nnoremap <silent> <buffer> tq :MerlinTypeOf<CR>
+    autocmd Filetype ocaml vnoremap <silent> <buffer> tq :MerlinTypeOfSel<CR>
 augroup END
 " " }}}
