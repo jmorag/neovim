@@ -141,10 +141,10 @@ vmap <UP> <Plug>MoveBlockUp
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <silent> <Leader>gp :Git push<CR>
+let g:gitgutter_map_keys = 0
 nmap <Leader>ga <Plug>GitGutterStageHunk
 nmap <Leader>gu <Plug>GitGutterUndoHunk
 nmap <Leader>gv <Plug>GitGutterPreviewHunk
-
 
 " Tabs
 nnoremap <silent> <Leader>t :tabnew<CR>
