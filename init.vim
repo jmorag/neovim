@@ -98,7 +98,7 @@ augroup END
 " Misc Key mappings {{{ " 
 
 let mapleader = "\<Space>"
-let maplocalleader = "\\"
+let maplocalleader = "\<Space>"
 
 "Life is better this way
 nnoremap ; :
