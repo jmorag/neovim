@@ -99,7 +99,7 @@ augroup END
 " Misc Key mappings {{{ " 
 
 let mapleader = "\<Space>"
-let maplocalleader = "\<Space>"
+let maplocalleader = "\\"
 
 "Life is better this way
 nnoremap ; :
@@ -143,6 +143,10 @@ nnoremap <Leader>gp :Git push<CR>
 
 " Tabs
 nnoremap <silent> <Leader>t :tabnew<CR>
+
+" Buffers
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [b :bprev<CR>
 
 " Linter errors
 nnoremap <silent> ]e :ALENextWrap<CR>
@@ -241,7 +245,8 @@ nnoremap <silent> <leader>sE :vs ~/.config/nvim/plugged/vim-snippets/snippets<CR
 
 
 " Python autocompletion
-let g:ycm_python_binary_path = '/usr/bin/python3'
+let s:python_version = 3
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
 
 " Stop asking about .ycm_extra_conf.py file
 let g:ycm_extra_conf_globlist = ['~/*']
@@ -402,9 +407,9 @@ augroup latex
     autocmd Filetype tex set spell
     autocmd Filetype tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
     autocmd Filetype tex let b:delimitMate_quotes = "$"
-    autocmd Filetype tex inoremap \[ \[\]<LEFT><LEFT>
-    autocmd Filetype tex inoremap _ _{}<LEFT>
-    autocmd Filetype tex inoremap ^ ^{}<LEFT>
+    autocmd Filetype tex inoremap <buffer> \[ \[\]<LEFT><LEFT>
+    autocmd Filetype tex inoremap <buffer> _ _{}<LEFT>
+    autocmd Filetype tex inoremap <buffer> ^ ^{}<LEFT>
 augroup END
 " }}}
 
@@ -466,7 +471,8 @@ endif
 
 augroup ocaml
     autocmd!
-    autocmd BufEnter,BufWinEnter *.ml[l]?  setlocal commentstring=(*\ %s\ *)
-    autocmd BufEnter,BufWinEnter *.mly     setlocal commentstring=/*\ %s\ */
+    autocmd BufEnter,BufWinEnter *.ml  setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.mll setlocal commentstring=(*\ %s\ *)
+    autocmd BufEnter,BufWinEnter *.mly setlocal commentstring=/*\ %s\ */
 augroup END
 " " }}}
