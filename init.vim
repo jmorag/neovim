@@ -66,6 +66,10 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'eagletmt/neco-ghc'
 "General linter
 Plug 'w0rp/ale'
+"Documentation
+if has('mac') == 1
+    Plug 'rizzatti/dash.vim'
+endif
 
 call plug#end()
 " End Plugin Settings ----}}}
@@ -242,6 +246,9 @@ nnoremap s :Find<CR>
 " Fzf list buffers
 nnoremap : :Buffers<CR>
 
+" Search documentation
+nmap <silent> <leader>d <Plug>DashSearch
+
 " }}}
 
 " Completion and snippets {{{ "
@@ -263,8 +270,9 @@ let g:ycm_extra_conf_globlist = ['~/*']
 " Use bare bones global ycm conf as default
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 
-" Less aggressive completion
-" let g:ycm_min_num_of_chars_for_completion = 5
+" I never use this
+let g:ycm_key_detailed_diagnostics = ''
+
 
 let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsJumpForwardTrigger="<Tab>"
