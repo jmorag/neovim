@@ -138,6 +138,7 @@ vmap <UP> <Plug>MoveBlockUp
 
 " Git
 nnoremap <silent> <Leader>gs :Gstatus<CR>
+nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <Leader>gp :Git push<CR>
 
 " Tabs
