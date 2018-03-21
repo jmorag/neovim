@@ -161,6 +161,8 @@ nnoremap <silent> [b :bprev<CR>
 " Linter errors
 nnoremap <silent> ]e :ALENextWrap<CR>
 nnoremap <silent> [e :ALEPreviousWrap<CR>
+nnoremap <silent> <Leader>at :ALEToggleBuffer<CR>
+nnoremap <silent> <Leader>ad :ALEDetail<CR>
 
 " Vimrc mappings under leader v
 nnoremap <silent> <Leader>ve :tabedit ~/.config/nvim/init.vim<CR>
