@@ -162,8 +162,11 @@ nnoremap <silent> [b :bprev<CR>
 nnoremap <silent> ]e :ALENextWrap<CR>
 nnoremap <silent> [e :ALEPreviousWrap<CR>
 
-" Edit vimrc easily
-nnoremap <silent> <Leader>ev :tabedit ~/.config/nvim/init.vim<CR>
+" Vimrc mappings under leader v
+nnoremap <silent> <Leader>ve :tabedit ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <Leader>vs :source %<CR>
+nnoremap <silent> <Leader>vi :PlugInstall<CR>
+nnoremap <silent> <Leader>vu :PlugUpdate<CR>
 
 " Undo tree visualization 
 nnoremap <silent> <Leader>u :MUndoToggle<CR>
@@ -432,7 +435,7 @@ let g:vimtex_imaps_leader = ';'
 augroup latex
     autocmd!
     autocmd Filetype tex inoremap <silent> <buffer> fd <ESC>:wall<CR>
-    autocmd Filetype tex set spell
+    autocmd Filetype tex setlocal spell
     autocmd Filetype tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
     autocmd Filetype tex let b:delimitMate_quotes = "$"
     autocmd Filetype tex inoremap <buffer> \[ \[\]<LEFT><LEFT>
