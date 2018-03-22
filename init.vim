@@ -38,7 +38,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-multiple-cursors' "Experimental
 Plug 'matze/vim-move'
 Plug 'machakann/vim-highlightedyank'
-let g:highlightedyank_highlight_duration = 300
+let g:highlightedyank_highlight_duration = 200
 "Mappings
 Plug 'tpope/vim-repeat'
 "Aesthetics
@@ -149,11 +149,14 @@ nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <silent> <Leader>gp :Git push<CR>
 nnoremap <silent> <Leader>gd :Gdiff<CR>
+nnoremap <silent> <Leader>gc :Gcommit<CR>
 let g:gitgutter_map_keys = 0
 nmap <Leader>ga <Plug>GitGutterStageHunk
 nmap <Leader>gu <Plug>GitGutterUndoHunk
 nmap <Leader>gv <Plug>GitGutterPreviewHunk
 nnoremap <Leader>gg :GitGutter<CR>
+nnoremap <silent> ]g :GitGutterNextHunk<CR>
+nnoremap <silent> [g :GitGutterPrevHunk<CR>
 
 " Tabs
 nnoremap <silent> <Leader>t :tabnew<CR>
@@ -175,7 +178,7 @@ nnoremap <silent> <Leader>vi :PlugInstall<CR>
 nnoremap <silent> <Leader>vu :PlugUpdate<CR>
 
 " Undo tree visualization 
-nnoremap <silent> <Leader>u :MUndoToggle<CR>
+nnoremap <silent> <Leader>u :MundoToggle<CR>
 
 " Weird python thing I don't understand
 nnoremap <buffer> <C-B> :exec ':w !python' shellescape(@%, 1)<cr>
@@ -447,6 +450,7 @@ augroup latex
     autocmd Filetype tex inoremap <buffer> \[ \[\]<LEFT><LEFT>
     autocmd Filetype tex inoremap <buffer> _ _{}<LEFT>
     autocmd Filetype tex inoremap <buffer> ^ ^{}<LEFT>
+    autocmd Filetype tex let b:ale_enabled = 0
 augroup END
 " }}}
 
