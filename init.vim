@@ -37,6 +37,7 @@ Plug 'wellle/targets.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-multiple-cursors' "Experimental
 Plug 'matze/vim-move'
+Plug 'machakann/vim-highlightedyank'
 "Mappings
 Plug 'tpope/vim-repeat'
 "Aesthetics
@@ -150,6 +151,7 @@ let g:gitgutter_map_keys = 0
 nmap <Leader>ga <Plug>GitGutterStageHunk
 nmap <Leader>gu <Plug>GitGutterUndoHunk
 nmap <Leader>gv <Plug>GitGutterPreviewHunk
+nnoremap <Leader>gg :GitGutter<CR>
 
 " Tabs
 nnoremap <silent> <Leader>t :tabnew<CR>
@@ -162,7 +164,7 @@ nnoremap <silent> [b :bprev<CR>
 nnoremap <silent> ]e :ALENextWrap<CR>
 nnoremap <silent> [e :ALEPreviousWrap<CR>
 nnoremap <silent> <Leader>at :ALEToggleBuffer<CR>
-nnoremap <silent> <Leader>ad :ALEDetail<CR>
+nnoremap <silent> <Leader>ad :ALEDetail<CR><C-w><C-j>
 
 " Vimrc mappings under leader v
 nnoremap <silent> <Leader>ve :tabedit ~/.config/nvim/init.vim<CR>
