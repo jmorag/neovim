@@ -84,6 +84,9 @@ augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
     autocmd FileType vim nnoremap , :wall<CR>:source $MYVIMRC<CR>:nohlsearch<CR>
+    autocmd FileType vim nnoremap <silent> <buffer> <Leader>vs :source %<CR>
+    autocmd FileType vim nnoremap <silent> <buffer> <Leader>vi :PlugInstall<CR>
+    autocmd FileType vim nnoremap <silent> <buffer> <Leader>vu :PlugUpdate<CR>
 augroup END
 
 augroup filetype_config
@@ -173,9 +176,6 @@ nnoremap <silent> <Leader>ad :ALEDetail<CR><C-w><C-j>
 
 " Vimrc mappings under leader v
 nnoremap <silent> <Leader>ve :tabedit ~/.config/nvim/init.vim<CR>
-nnoremap <silent> <Leader>vs :source %<CR>
-nnoremap <silent> <Leader>vi :PlugInstall<CR>
-nnoremap <silent> <Leader>vu :PlugUpdate<CR>
 
 " Undo tree visualization 
 nnoremap <silent> <Leader>u :MundoToggle<CR>
