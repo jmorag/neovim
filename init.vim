@@ -38,6 +38,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-multiple-cursors' "Experimental
 Plug 'matze/vim-move'
 Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = 300
 "Mappings
 Plug 'tpope/vim-repeat'
 "Aesthetics
