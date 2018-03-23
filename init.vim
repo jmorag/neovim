@@ -204,6 +204,9 @@ map N  <Plug>(incsearch-nohl-N)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
 
+" Inccommand
+set inccommand=nosplit
+
 " Create GotoCharTimer
 nmap F <Plug>(easymotion-sn)
 function! PressEnter(timer)
