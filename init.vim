@@ -253,7 +253,7 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column
  \ --fixed-strings --ignore-case 
  \ --follow --glob "!.git/*" 
  \ --color "always" '.shellescape(<q-args>), 1, <bang>0)
-nnoremap s :Find<CR>
+nnoremap <leader>/ :Find<CR>
 
 " Fzf list buffers
 nnoremap : :Buffers<CR>
