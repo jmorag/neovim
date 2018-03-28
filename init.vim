@@ -283,7 +283,7 @@ let g:ycm_python_binary_path = '/usr/local/bin/python3'
 let g:ycm_extra_conf_globlist = ['~/*']
 
 " Use bare bones global ycm conf as default
-let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.config/nvim/ycm_extra_conf.py'
 
 " I never use this
 let g:ycm_key_detailed_diagnostics = ''
