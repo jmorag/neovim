@@ -153,6 +153,9 @@ nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <silent> <Leader>gp :Git push<CR>
 nnoremap <silent> <Leader>gd :Gdiff<CR>
 nnoremap <silent> <Leader>gc :Gcommit<CR>
+nnoremap <silent> <Leader>gca :Gcommit --amend<CR>
+nnoremap <silent> <Leader>gl :silent! Glog<CR>
+nnoremap <silent> <Leader>ge :Gedit<CR>
 let g:gitgutter_map_keys = 0
 nmap <Leader>ga <Plug>GitGutterStageHunk
 nmap <Leader>gu <Plug>GitGutterUndoHunk
@@ -160,6 +163,8 @@ nmap <Leader>gv <Plug>GitGutterPreviewHunk
 nnoremap <silent> <Leader>gg :GitGutter<CR>
 nnoremap <silent> ]g :GitGutterNextHunk<CR>
 nnoremap <silent> [g :GitGutterPrevHunk<CR>
+nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> [q :cprevious<CR>
 
 " Tabs
 nnoremap <silent> <Leader>t :tabnew<CR>
