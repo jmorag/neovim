@@ -157,7 +157,7 @@ let g:gitgutter_map_keys = 0
 nmap <Leader>ga <Plug>GitGutterStageHunk
 nmap <Leader>gu <Plug>GitGutterUndoHunk
 nmap <Leader>gv <Plug>GitGutterPreviewHunk
-nnoremap <Leader>gg :GitGutter<CR>
+nnoremap <silent> <Leader>gg :GitGutter<CR>
 nnoremap <silent> ]g :GitGutterNextHunk<CR>
 nnoremap <silent> [g :GitGutterPrevHunk<CR>
 
