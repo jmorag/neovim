@@ -44,7 +44,16 @@ Plug 'tpope/vim-repeat'
 "Aesthetics
 Plug 'altercation/vim-colors-solarized'
 Plug 'itchyny/lightline.vim'
-let g:lightline = { 'colorscheme': 'solarized', }
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
 "File Navigation
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
 Plug 'junegunn/fzf.vim'
