@@ -54,6 +54,7 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+Plug 'sbdchd/neoformat'
 "File Navigation
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
 Plug 'junegunn/fzf.vim'
@@ -151,6 +152,7 @@ nnoremap L $
 " Formatting
 nmap = <Plug>(EasyAlign)
 vmap = <Plug>(EasyAlign)
+nnoremap <silent> <Leader>= :Neoformat<CR>
 let g:move_map_keys = 0
 vmap <DOWN> <Plug>MoveBlockDown
 vmap <UP> <Plug>MoveBlockUp
@@ -161,7 +163,7 @@ nnoremap <silent> <Leader>gb :Gblame<CR>
 nnoremap <silent> <Leader>gp :Git push<CR>
 nnoremap <silent> <Leader>gd :Gdiff<CR>
 nnoremap <silent> <Leader>gc :Gcommit<CR>
-nnoremap <silent> <Leader>gca :Gcommit --amend<CR>
+nnoremap <silent> <Leader>gca :Gcommit --amend<CR>:q<CR>
 nnoremap <silent> <Leader>gl :silent! Glog<CR>
 nnoremap <silent> <Leader>ge :Gedit<CR>
 let g:gitgutter_map_keys = 0
@@ -494,23 +496,13 @@ let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
 
 let s:opam_configuration = {}
 
-function! OpamConfOcpIndent()
-  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-endfunction
-let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-function! OpamConfOcpIndex()
-  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-endfunction
-let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
 function! OpamConfMerlin()
   let l:dir = s:opam_share_dir . "/merlin/vim"
   execute "set rtp+=" . l:dir
 endfunction
 let s:opam_configuration['merlin'] = function('OpamConfMerlin')
 
-let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_packages = ["merlin"]
 let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
 let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
 for tool in s:opam_packages
@@ -520,11 +512,6 @@ for tool in s:opam_packages
   endif
 endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
-" ## added by OPAM user-setup for vim / ocp-indent ## 82df321edcaeade0db7a7fa29b0090af ## you can edit, but keep this line
-if count(s:opam_available_tools,"ocp-indent") == 0
-  source "/Users/josephmorag/.opam/default/share/vim/syntax/ocp-indent.vim"
-endif
-" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
 
 " Disable ocaml's default mappings
 let g:no_ocaml_maps=1
