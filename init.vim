@@ -160,7 +160,7 @@ vmap <UP> <Plug>MoveBlockUp
 " Git
 nnoremap <silent> <Leader>gs :Gstatus<CR>
 nnoremap <silent> <Leader>gb :Gblame<CR>
-nnoremap <silent> <Leader>gp :Git push<CR>
+nnoremap <silent> <Leader>gp :execute ":Git push origin " . fugitive#head(0)<CR>
 nnoremap <silent> <Leader>gd :Gdiff<CR>
 nnoremap <silent> <Leader>gc :Gcommit<CR>
 nnoremap <silent> <Leader>gca :Gcommit --amend<CR>:q<CR>
