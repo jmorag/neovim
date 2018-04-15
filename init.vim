@@ -203,6 +203,7 @@ nnoremap <buffer> <C-B> :exec ':w !python' shellescape(@%, 1)<cr>
 " Navigation {{{
 
 " Easymotion config
+let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1 " 1 matches !, etc.
 " Imporve vim's normal f motion
