@@ -247,6 +247,17 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+" Find tabs easily
+nnoremap <silent> <leader>1 1gt
+nnoremap <silent> <leader>2 2gt
+nnoremap <silent> <leader>3 3gt
+nnoremap <silent> <leader>4 4gt
+nnoremap <silent> <leader>5 5gt
+nnoremap <silent> <leader>6 6gt
+nnoremap <silent> <leader>7 7gt
+nnoremap <silent> <leader>8 8gt
+nnoremap <silent> <leader>9 9gt
+
 " Scroll nicely in terminal mode
 tnoremap <c-j> <c-n>
 tnoremap <c-k> <c-p>
@@ -261,7 +272,7 @@ augroup nerd_tree
 augroup END
 
 " Fuzzy file finding
-nnoremap <leader>p :Files<CR>
+nnoremap <leader><space> :Files<CR>
 set grepprg=rg\ --vimgrep
 
 " Fuzzy term finding in project with fzf 
@@ -522,6 +533,6 @@ augroup ocaml
     autocmd BufEnter,BufWinEnter *.mll     setlocal commentstring=(*\ %s\ *)
     autocmd BufEnter,BufWinEnter *.mly     setlocal commentstring=/*\ %s\ */
     autocmd Filetype ocaml nnoremap <silent> <buffer> tq :MerlinTypeOf<CR>
-    autocmd Filetype ocaml vnoremap <silent> <buffer> tq :MerlinTypeOfSel<CR>
+    autocmd Filetype ocaml vnoremap <silent> <buffer> tq :MerlinTypeOf<CR>
 augroup END
 " " }}}
