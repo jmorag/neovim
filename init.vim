@@ -264,7 +264,8 @@ tnoremap <c-j> <c-n>
 tnoremap <c-k> <c-p>
 
 " Open NerdTree
-nnoremap - :NERDTreeToggle<CR>
+nnoremap <silent> - :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>- :NERDTreeFind<CR>
 
 " Close vim if all that's left open in NERDTree
 augroup nerd_tree
