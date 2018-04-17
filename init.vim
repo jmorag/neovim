@@ -108,12 +108,6 @@ augroup filetype_help
     autocmd FileType help wincmd L
 augroup END
 
-augroup filetype_git
-    autocmd!
-    autocmd BufLeave COMMIT_EDITMSG execute "normal! :GitGutter\<CR>"
-augroup END
-
-
 augroup filetype_all
     autocmd!
     autocmd InsertLeave * set cursorline
