@@ -129,7 +129,7 @@ nnoremap , :wall<CR>
 
 " Toggle comment with single key
 nmap ' <Plug>CommentaryLine
-nmap " gcap
+nmap <Leader>' gcap
 vmap ' <Plug>Commentary
 
 " Ycmd Fixit
@@ -152,7 +152,7 @@ nnoremap L $
 " Formatting
 nmap = <Plug>(EasyAlign)
 vmap = <Plug>(EasyAlign)
-nnoremap <silent> <Leader>= :Neoformat<CR>
+noremap <silent> <Leader>= :Neoformat<CR>
 let g:move_map_keys = 0
 vmap <DOWN> <Plug>MoveBlockDown
 vmap <UP> <Plug>MoveBlockUp
@@ -182,6 +182,11 @@ nnoremap <silent> <Leader>t :tabnew<CR>
 " Buffers
 nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [b :bprev<CR>
+
+" Terminal
+nnoremap <silent> <leader>ot :tabedit term://bash<CR>i
+nnoremap <silent> <leader>ov :vsplit  term://bash<CR><C-w>Li
+nnoremap <silent> <leader>os :split term://bash<CR>i
 
 " Linter errors
 nnoremap <silent> ]e :ALENextWrap<CR>
