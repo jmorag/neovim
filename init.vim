@@ -42,7 +42,7 @@ let g:highlightedyank_highlight_duration = 200
 "Mappings
 Plug 'tpope/vim-repeat'
 "Aesthetics
-Plug 'altercation/vim-colors-solarized'
+Plug 'icymind/NeoSolarized'
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -184,9 +184,10 @@ nnoremap <silent> ]b :bnext<CR>
 nnoremap <silent> [b :bprev<CR>
 
 " Terminal
-nnoremap <silent> <leader>ot :tabedit term://bash<CR>i
-nnoremap <silent> <leader>ov :vsplit  term://bash<CR><C-w>Li
-nnoremap <silent> <leader>os :split term://bash<CR>i
+nnoremap <silent> <leader>o  :edit term://fish<CR>i
+nnoremap <silent> <leader>ot :tabedit term://fish<CR>i
+nnoremap <silent> <leader>ov :vsplit  term://fish<CR><C-w>Li
+nnoremap <silent> <leader>os :split term://fish<CR>i
 
 " Linter errors
 nnoremap <silent> ]e :ALENextWrap<CR>
@@ -199,9 +200,7 @@ nnoremap <silent> <Leader>ve :tabedit ~/.config/nvim/init.vim<CR>
 
 " Undo tree visualization 
 nnoremap <silent> <Leader>u :MundoToggle<CR>
-
-" Weird python thing I don't understand
-nnoremap <buffer> <C-B> :exec ':w !python' shellescape(@%, 1)<cr>
+let g:mundo_width = 60
 
 " }}} Key mappings "
 
@@ -404,9 +403,9 @@ set gdefault
 
 " Color scheme (terminal)
 syntax enable
-set t_Co=256
+set termguicolors
 set background=dark
-colorscheme solarized
+colorscheme NeoSolarized
 set noshowmode
 " Allow background color toggle
 if exists("*ToggleBackground") == 0
@@ -506,6 +505,13 @@ augroup END
 
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
 " }}} Haskell config "
+
+" Python config {{{ "
+augroup filetype_python
+    autocmd!
+    autocmd Filetype python nnoremap <silent> <buffer> <Leader>r :! python3 %<CR>
+augroup END
+" }}} Python config "
 
 " " {{{ Ocaml config
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
