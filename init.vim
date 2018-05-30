@@ -123,6 +123,8 @@ let maplocalleader = "\<Space>"
 "Life is better this way
 nnoremap ; :
 vnoremap ; :
+nnoremap <leader>; :Commands<CR>
+vnoremap <leader>; :Commands<CR>
 
 "Since comma isn't the leader, use it to save
 nnoremap , :wall<CR>
@@ -291,7 +293,7 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column
 nnoremap <leader>/ :Find<CR>
 
 " Fzf list buffers
-nnoremap : :Buffers<CR>
+nnoremap <leader>b :Buffers<CR>
 
 " Search documentation
 nmap <silent> <leader>d <Plug>DashSearch
@@ -501,6 +503,7 @@ augroup filetype_haskell
     autocmd Filetype haskell let b:ale_linters = {
                                    \   'haskell': ['stack-ghc-mod', 'stack-ghc'],
                                    \}
+    autocmd Filetype haskell set shiftwidth=2
 augroup END
 
 let g:ycm_semantic_triggers = {'haskell' : ['.']}
