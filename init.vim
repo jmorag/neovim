@@ -2,8 +2,10 @@
 " Moving to NeoVim
 "---------------------------------
 
-" Plugin settings ----{{{
+" Use this so that neovim doesn't try to run these commands in fish
+set shell=/bin/sh
 
+" Plugin settings ----{{{
 " Helps force plugins to load correctly when it is turned back on below
 filetype off
 
@@ -71,10 +73,15 @@ Plug 'lervag/vimtex'
 "Ocaml
 Plug 'the-lambda-church/merlin'
 "Haskell
-Plug 'eagletmt/ghcmod-vim'
-" required for ghcmod
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'eagletmt/neco-ghc'
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': './install.sh'
+"     \ }
+" let g:LanguageClient_serverCommands = {
+"     \ 'haskell': ['hie', '--lsp'],
+"     \ }
+" Plug 'eagletmt/ghcmod-vim'
+" Plug 'Shougo/vimproc'
 "General linter
 Plug 'w0rp/ale'
 "Documentation
@@ -506,7 +513,7 @@ augroup filetype_haskell
     autocmd Filetype haskell set shiftwidth=2
 augroup END
 
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
+" let g:ycm_semantic_triggers = {'haskell' : ['.']}
 " }}} Haskell config "
 
 " Python config {{{ "
