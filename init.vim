@@ -508,7 +508,7 @@ augroup filetype_haskell
     " Remove <> from haskell matchpairs
     autocmd Filetype haskell let b:delimitMate_matchpairs = "(:),[:],{:}"
     autocmd Filetype haskell let b:ale_linters = {
-                                   \   'haskell': ['stack-ghc-mod', 'stack-ghc'],
+                                   \   'haskell': ['stack-ghc-mod', 'stack-ghc', 'hlint'],
                                    \}
     autocmd Filetype haskell set shiftwidth=2
 augroup END
