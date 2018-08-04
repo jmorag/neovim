@@ -67,6 +67,7 @@ Plug 'haya14busa/incsearch-easymotion.vim'
 "Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'gregsexton/gitv', { 'on' : ['Gitv'] }
 "Languages -----------------------
 "Latex
 Plug 'lervag/vimtex', { 'for' : 'latex' }
