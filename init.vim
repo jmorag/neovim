@@ -69,25 +69,22 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "Languages -----------------------
 "Latex
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex', { 'for' : 'latex' }
 "Ocaml
-Plug 'the-lambda-church/merlin'
+Plug 'the-lambda-church/merlin', { 'for' : 'ocaml' }
 "Haskell
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': './install.sh'
-"     \ }
-" let g:LanguageClient_serverCommands = {
-"     \ 'haskell': ['hie', '--lsp'],
-"     \ }
-" Plug 'eagletmt/ghcmod-vim'
-" Plug 'Shougo/vimproc'
+Plug 'eagletmt/ghcmod-vim', { 'for' : 'haskell' }
+Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': 'haskell' } "neco-ghc dependency
+Plug 'glittershark/vim-hare', { 'for': 'haskell' }
 "General linter
 Plug 'w0rp/ale'
 "Documentation
 if has('mac') == 1
     Plug 'rizzatti/dash.vim'
 endif
+"Fish shell
+Plug 'dag/vim-fish', { 'for' : 'fish' } 
 
 call plug#end()
 " End Plugin Settings ----}}}
@@ -499,6 +496,7 @@ augroup END
 " }}}
 
 " Haskell config {{{ "
+let g:haskellmode_completion_ghc = 0
 augroup filetype_haskell
     autocmd!
     autocmd Filetype haskell nnoremap <silent> <buffer> tw :GhcModTypeInsert<CR>
@@ -511,6 +509,8 @@ augroup filetype_haskell
                                    \   'haskell': ['stack-ghc-mod', 'stack-ghc', 'hlint'],
                                    \}
     autocmd Filetype haskell set shiftwidth=2
+    autocmd Filetype cabal setlocal commentstring=--\ %s
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 
 " let g:ycm_semantic_triggers = {'haskell' : ['.']}
