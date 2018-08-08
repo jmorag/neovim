@@ -73,10 +73,11 @@ Plug 'lervag/vimtex', { 'for' : 'latex' }
 "Ocaml
 Plug 'the-lambda-church/merlin', { 'for' : 'ocaml' }
 "Haskell
-Plug 'eagletmt/ghcmod-vim', { 'for' : 'haskell' }
-Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
-Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': 'haskell' } "neco-ghc dependency
-Plug 'glittershark/vim-hare', { 'for': 'haskell' }
+Plug 'parsonsmatt/intero-neovim'
+" Plug 'eagletmt/ghcmod-vim', { 'for' : 'haskell' }
+" Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+" Plug 'Shougo/vimproc.vim', { 'do': 'make', 'for': 'haskell' } "neco-ghc dependency
+" Plug 'glittershark/vim-hare', { 'for': 'haskell' }
 "General linter
 Plug 'w0rp/ale'
 "Documentation
@@ -154,6 +155,10 @@ nnoremap Y y$
 " Capital H and L are stronger h and l
 nnoremap H ^
 nnoremap L $
+
+" Indenting in visual mode
+vnoremap <silent> < <gv
+vnoremap <silent> > >gv
 
 " Formatting
 nmap = <Plug>(EasyAlign)
@@ -499,21 +504,20 @@ augroup END
 let g:haskellmode_completion_ghc = 0
 augroup filetype_haskell
     autocmd!
-    autocmd Filetype haskell nnoremap <silent> <buffer> tw :GhcModTypeInsert<CR>
-    autocmd Filetype haskell nnoremap <silent> <buffer> ts :GhcModSplitFunCase<CR>
-    autocmd Filetype haskell nnoremap <silent> <buffer> tq :GhcModType<CR>
-    autocmd Filetype haskell nnoremap <silent> <buffer> te :GhcModTypeClear<CR>
+    autocmd Filetype haskell nnoremap <silent> <buffer> tw :InteroTypeInsert<CR>
+    autocmd Filetype haskell nmap <silent> <buffer> tq <Plug>InteroGenericType
     " Remove <> from haskell matchpairs
     autocmd Filetype haskell let b:delimitMate_matchpairs = "(:),[:],{:}"
     autocmd Filetype haskell let b:ale_linters = {
-                                   \   'haskell': ['stack-ghc-mod', 'stack-ghc', 'hlint'],
-                                   \}
+                           \   'haskell': ['stack-ghc', 'hlint', 'hie', 'brittany'],
+                           \}
     autocmd Filetype haskell set shiftwidth=2
     autocmd Filetype cabal setlocal commentstring=--\ %s
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    " autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 
 " let g:ycm_semantic_triggers = {'haskell' : ['.']}
+let g:intero_use_neomake = 0
 " }}} Haskell config "
 
 " Python config {{{ "
