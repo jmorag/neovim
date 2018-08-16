@@ -510,7 +510,7 @@ augroup filetype_haskell
     " Remove <> from haskell matchpairs
     autocmd Filetype haskell let b:delimitMate_matchpairs = "(:),[:],{:}"
     autocmd Filetype haskell let b:ale_linters = {
-                           \   'haskell': ['stack-ghc', 'hlint', 'hie', 'brittany'],
+                           \   'haskell': ['stack-build', 'hlint', 'hie', 'brittany'],
                            \}
     autocmd Filetype haskell set shiftwidth=2
     autocmd Filetype cabal setlocal commentstring=--\ %s
